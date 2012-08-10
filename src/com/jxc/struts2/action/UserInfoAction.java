@@ -1,5 +1,6 @@
 /**
- * 使用github进行版本控制。
+ * author:jzp
+ * date:2012年08月10日
  */
 package com.jxc.struts2.action;
 
