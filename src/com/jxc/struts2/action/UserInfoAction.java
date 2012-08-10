@@ -1,6 +1,6 @@
 /**
  * author:jzp
- * date:2012Äê08ÔÂ10ÈÕ
+ * date:2012-08-10
  */
 package com.jxc.struts2.action;
 
