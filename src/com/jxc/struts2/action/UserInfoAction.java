@@ -1,3 +1,6 @@
+/**
+ * 使用github进行版本控制。
+ */
 package com.jxc.struts2.action;
 
 //import org.apache.struts.action.ActionServlet;
