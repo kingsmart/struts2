@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+        
+   <!--xmlns:context="http://www.springframework.org/schema/context" 
+ 
+ http://www.springframework.org/schema/context
+ http://www.springframework.org/schema/context/spring-context-3.0.xsd
+ -->      
+        
+        
+	<bean id="dataSource"
+		class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName"
+			value="com.mysql.jdbc.Driver">
+		</property>
+		<property name="url"
+			value="jdbc:mysql://localhost:3306/bbs"><!-- ?useUnicode=true&amp;characterEncoding=utf8 -->
+		</property>
+		<property name="username" value="root"></property>
+		<property name="password" value="jzpmn218"></property>
+	</bean>
+	<bean id="SessionF_ID"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.MySQLDialect
+				</prop>
+			</props>
+		</property> 
+		<property name="mappingResources">
+			<list>
+				<value>Student.hbm.xml</value>
+				<value>UserInfo.hbm.xml</value>
+			</list>
+		</property>
+		</bean>
+		
+		<!-- 为UserDAO注入 DataSource -->
+		<bean id="userDao" class="com.jxc.struts2.dao.impl.UserDaoImpl">
+			<property name="dataSource" ref="dataSource"></property>
+		</bean>
+		<!-- 为UserService注入userDAO -->
+
+		<bean id="userService" class="com.jxc.struts2.services.impl.UserServiceImpl">
+			<property name="userDao" ref="userDao"></property>
+		</bean>
+		
+		
+		<!-- 为resourceDAO注入DataSource  -->
+		<!--
+		<bean id="resourceDao" class="com.jxc.struts2.dao.impl.ResourceDaoImpl">
+			<property name="dataSource" ref="dataSource"></property>
+		</bean>
+		-->
+		<!-- 为resourceService注入resourceDAO -->
+		<!--<property name="resourceDao" ref="resourceDao"></property>
+		<bean id="resourceService" class="com.jxc.struts2.services.impl.ResourceServiceImpl" init-method="init">
+			 <constructor-arg ref="resourceDao"/>
+		</bean>
+		-->
+<!-- 
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${jdbc.driverClassName}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
+
+-->		
+		
+
+		
+
+<!--配置action-->
+		<bean id="userAction" class="com.jxc.struts2.action.UserInfoAction">
+			<property name="userSerivce">
+				<ref bean="userService"/>
+			</property>
+		</bean>
+		
+</beans>
